@@ -1,18 +1,12 @@
-
 const btn = document.querySelector('.btn');
 const content = document.querySelector('.content');
 const img = document.querySelector('.container img');
 
 const URL = 'https://api.chucknorris.io/jokes/random';
 
-btn.addEventListener('click', async ()=>{
-    try{
-        const data = await fetch(URL);
-        const response = await data.json();
-        displayData(response);
-    } catch(error) {
-        console.log(error);
-    }
+btn.addEventListener('click', ()=>{
+    getData(URL).then((response) => displayData(response))
+    .catch((err) => console.log(err));
 });
 
 
@@ -38,9 +32,9 @@ function getData(url){
 };
 
 
-function displayData({value:joke}){
+function displayData(data){
       img.classList.add('shake-img')
-        // const {value:joke} = data;
+        const {value:joke} = JSON.parse(data);
             content.textContent = joke;
     
             const random =Math.random() * 1000;
